@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { countryCodes } from "@/data/quizData";
 
@@ -10,62 +10,70 @@ interface ContactScreenProps {
 }
 
 const ContactScreen = ({ totalQuestions, onSubmit, onBack }: ContactScreenProps) => {
+  const [step, setStep] = useState(0); // 0=name, 1=email, 2=phone
   const [firstName, setFirstName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState("+351");
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [error, setError] = useState("");
 
-  const progress = ((totalQuestions + 1) / (totalQuestions + 1)) * 100;
+  const totalSteps = totalQuestions + 3; // quiz questions + 3 contact steps
+  const currentStep = totalQuestions + step + 1;
+  const progress = (currentStep / totalSteps) * 100;
 
-  // Auto-detect country
   useEffect(() => {
     try {
       const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
       const tzToCountry: Record<string, string> = {
-        "Europe/Lisbon": "+351",
-        "Europe/Paris": "+33",
-        "Europe/London": "+44",
-        "America/New_York": "+1",
-        "America/Chicago": "+1",
-        "America/Los_Angeles": "+1",
-        "Europe/Berlin": "+49",
-        "Europe/Madrid": "+34",
-        "Europe/Rome": "+39",
-        "Europe/Amsterdam": "+31",
-        "Europe/Brussels": "+32",
-        "Europe/Zurich": "+41",
-        "Europe/Stockholm": "+46",
-        "Europe/Oslo": "+47",
-        "Europe/Copenhagen": "+45",
-        "America/Sao_Paulo": "+55",
-        "Australia/Sydney": "+61",
-        "Asia/Tokyo": "+81",
+        "Europe/Lisbon": "+351", "Europe/Paris": "+33", "Europe/London": "+44",
+        "America/New_York": "+1", "America/Chicago": "+1", "America/Los_Angeles": "+1",
+        "Europe/Berlin": "+49", "Europe/Madrid": "+34", "Europe/Rome": "+39",
+        "Europe/Amsterdam": "+31", "Europe/Brussels": "+32", "Europe/Zurich": "+41",
+        "Europe/Stockholm": "+46", "Europe/Oslo": "+47", "Europe/Copenhagen": "+45",
+        "America/Sao_Paulo": "+55", "Australia/Sydney": "+61", "Asia/Tokyo": "+81",
         "Asia/Singapore": "+65",
       };
       if (tzToCountry[tz]) setCountryCode(tzToCountry[tz]);
     } catch {}
   }, []);
 
-  const validate = () => {
-    const e: Record<string, string> = {};
-    if (!firstName.trim()) e.firstName = "Please enter your name";
-    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-      e.email = "Please enter a valid email";
-    if (!phone.trim() || phone.replace(/\D/g, "").length < 6)
-      e.phone = "Please enter a valid phone number";
-    setErrors(e);
-    return Object.keys(e).length === 0;
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (validate()) {
-      onSubmit({ firstName, email, phone: `${countryCode} ${phone}` });
+  const handleBack = () => {
+    setError("");
+    if (step > 0) {
+      setStep(step - 1);
+    } else {
+      onBack();
     }
   };
 
-  const selectedCountry = countryCodes.find((c) => c.code === countryCode);
+  const handleNext = () => {
+    setError("");
+    if (step === 0) {
+      if (!firstName.trim()) { setError("Please enter your name"); return; }
+      setStep(1);
+    } else if (step === 1) {
+      if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setError("Please enter a valid email"); return;
+      }
+      setStep(2);
+    } else {
+      if (!phone.trim() || phone.replace(/\D/g, "").length < 6) {
+        setError("Please enter a valid phone number"); return;
+      }
+      onSubmit({ firstName: firstName.trim(), email: email.trim(), phone: `${countryCode} ${phone.trim()}` });
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") { e.preventDefault(); handleNext(); }
+  };
+
+  const stepLabels = ["What's your first name?", "What's your email?", "What's your phone number?"];
+  const stepSubtitles = [
+    "So we know who we're talking to.",
+    "We'll send you what's next for Amara.",
+    "For a personal welcome — no calls unless you ask.",
+  ];
 
   return (
     <motion.div
@@ -76,130 +84,97 @@ const ContactScreen = ({ totalQuestions, onSubmit, onBack }: ContactScreenProps)
       className="flex min-h-[100dvh] flex-col px-6 py-8"
     >
       <div className="flex items-center justify-between">
-        <button
-          onClick={onBack}
-          className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
-        >
+        <button onClick={handleBack} className="flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground">
           <ArrowLeft className="h-4 w-4" />
         </button>
-        <span className="text-xs tracking-widest text-muted-foreground">
-          Almost there
-        </span>
+        <span className="text-xs tracking-widest text-muted-foreground">Almost there</span>
       </div>
 
       <div className="mt-4 h-[2px] w-full overflow-hidden rounded-full bg-muted">
-        <motion.div
-          className="h-full bg-primary"
-          initial={{ width: `${((totalQuestions) / (totalQuestions + 1)) * 100}%` }}
-          animate={{ width: `${progress}%` }}
-          transition={{ duration: 0.5 }}
-        />
+        <motion.div className="h-full bg-primary" animate={{ width: `${progress}%` }} transition={{ duration: 0.5 }} />
       </div>
 
       <div className="flex flex-1 flex-col items-center justify-center">
-        <motion.h2
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
-          className="mb-2 text-center text-2xl font-light md:text-3xl"
-        >
-          Let's stay in touch
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.3 }}
-          className="mb-10 text-center text-sm text-muted-foreground"
-        >
-          We'll share what's next for Amara — no spam, ever.
-        </motion.p>
-
-        <form onSubmit={handleSubmit} className="w-full max-w-sm space-y-5">
+        <AnimatePresence mode="wait">
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
+            key={step}
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -30 }}
+            transition={{ duration: 0.4 }}
+            className="flex w-full max-w-sm flex-col items-center"
           >
-            <label className="mb-1.5 block text-xs uppercase tracking-widest text-muted-foreground">
-              First name
-            </label>
-            <input
-              type="text"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              className="w-full border-b-2 border-border bg-transparent pb-2 text-base outline-none transition-colors focus:border-primary"
-              placeholder="Your first name"
-            />
-            {errors.firstName && (
-              <p className="mt-1 text-xs text-destructive">{errors.firstName}</p>
-            )}
-          </motion.div>
+            <h2 className="mb-2 text-center text-2xl font-light md:text-3xl">
+              {stepLabels[step]}
+            </h2>
+            <p className="mb-10 text-center text-sm text-muted-foreground">
+              {stepSubtitles[step]}
+            </p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-          >
-            <label className="mb-1.5 block text-xs uppercase tracking-widest text-muted-foreground">
-              Email
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full border-b-2 border-border bg-transparent pb-2 text-base outline-none transition-colors focus:border-primary"
-              placeholder="your@email.com"
-            />
-            {errors.email && (
-              <p className="mt-1 text-xs text-destructive">{errors.email}</p>
-            )}
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-          >
-            <label className="mb-1.5 block text-xs uppercase tracking-widest text-muted-foreground">
-              Phone
-            </label>
-            <div className="flex gap-2">
-              <select
-                value={countryCode}
-                onChange={(e) => setCountryCode(e.target.value)}
-                className="border-b-2 border-border bg-transparent pb-2 text-base outline-none transition-colors focus:border-primary"
-              >
-                {countryCodes.map((c) => (
-                  <option key={c.code + c.country} value={c.code}>
-                    {c.flag} {c.code}
-                  </option>
-                ))}
-              </select>
+            {step === 0 && (
               <input
-                type="tel"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="flex-1 border-b-2 border-border bg-transparent pb-2 text-base outline-none transition-colors focus:border-primary"
-                placeholder="Your phone number"
+                autoFocus
+                type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                onKeyDown={handleKeyDown}
+                className="w-full border-b-2 border-border bg-transparent pb-3 text-center text-xl outline-none transition-colors focus:border-primary"
+                placeholder="Your first name"
+                maxLength={100}
               />
-            </div>
-            {errors.phone && (
-              <p className="mt-1 text-xs text-destructive">{errors.phone}</p>
             )}
-          </motion.div>
 
-          <motion.button
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            type="submit"
-            className="mt-6 w-full rounded-full bg-primary py-4 text-sm uppercase tracking-[0.2em] text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Reserve My Spot
-          </motion.button>
-        </form>
+            {step === 1 && (
+              <input
+                autoFocus
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                onKeyDown={handleKeyDown}
+                className="w-full border-b-2 border-border bg-transparent pb-3 text-center text-xl outline-none transition-colors focus:border-primary"
+                placeholder="your@email.com"
+                maxLength={255}
+              />
+            )}
+
+            {step === 2 && (
+              <div className="flex w-full gap-2">
+                <select
+                  value={countryCode}
+                  onChange={(e) => setCountryCode(e.target.value)}
+                  className="border-b-2 border-border bg-transparent pb-3 text-base outline-none transition-colors focus:border-primary"
+                >
+                  {countryCodes.map((c) => (
+                    <option key={c.code + c.country} value={c.code}>
+                      {c.flag} {c.code}
+                    </option>
+                  ))}
+                </select>
+                <input
+                  autoFocus
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  onKeyDown={handleKeyDown}
+                  className="flex-1 border-b-2 border-border bg-transparent pb-3 text-center text-xl outline-none transition-colors focus:border-primary"
+                  placeholder="912 345 678"
+                  maxLength={20}
+                />
+              </div>
+            )}
+
+            {error && <p className="mt-3 text-xs text-destructive">{error}</p>}
+
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={handleNext}
+              className="mt-10 w-full rounded-full bg-primary py-4 text-sm uppercase tracking-[0.2em] text-primary-foreground transition-colors hover:bg-primary/90"
+            >
+              {step < 2 ? "Continue" : "Reserve My Spot"}
+            </motion.button>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </motion.div>
   );
