@@ -110,7 +110,7 @@ const ThankYouScreen = ({ firstName }: ThankYouScreenProps) => {
           transition={{ delay: 0.3, duration: 0.5 }}
           className="mt-4 max-w-sm text-center text-sm leading-relaxed text-muted-foreground md:text-base"
         >
-          We're pulling back the curtain on Amara this <span className="font-medium text-foreground">{formatEventDate(eventDate)}</span>. You don't want to miss this.
+          Your new chapter begins <span className="font-medium text-foreground">{formatEventDate(eventDate)}</span>. This is where it all starts.
         </motion.p>
 
         <motion.div
