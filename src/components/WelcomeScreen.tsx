@@ -1,6 +1,48 @@
 import { motion } from "framer-motion";
+import { Video } from "lucide-react";
 import logoWhite from "@/assets/logo-white.png";
 import lpBg from "@/assets/lp-bg.jpg";
+
+function getNextThursday8pmLisbon(): Date {
+  const now = new Date();
+  // Create a date in Lisbon timezone
+  const lisbonNow = new Date(now.toLocaleString("en-US", { timeZone: "Europe/Lisbon" }));
+  const dayOfWeek = lisbonNow.getDay(); // 0=Sun, 4=Thu
+  let daysUntilThursday = (4 - dayOfWeek + 7) % 7;
+  
+  // If it's Thursday, check if 8PM has passed in Lisbon
+  if (daysUntilThursday === 0) {
+    const lisbonHour = lisbonNow.getHours();
+    if (lisbonHour >= 20) {
+      daysUntilThursday = 7;
+    }
+  }
+  
+  // Build the target date at 20:00 Lisbon time
+  const target = new Date(lisbonNow);
+  target.setDate(lisbonNow.getDate() + daysUntilThursday);
+  target.setHours(20, 0, 0, 0);
+  
+  // Convert back: find the UTC equivalent of 20:00 Lisbon
+  const lisbonStr = target.toLocaleDateString("en-CA", { timeZone: "Europe/Lisbon" }); // YYYY-MM-DD
+  const utcTarget = new Date(`${lisbonStr}T20:00:00`);
+  // Adjust for Lisbon offset
+  const lisbonOffset = new Date(utcTarget.toLocaleString("en-US", { timeZone: "Europe/Lisbon" })).getTime() - utcTarget.getTime();
+  
+  return new Date(utcTarget.getTime() - lisbonOffset);
+}
+
+function formatEventDate(date: Date): string {
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    timeZoneName: "short",
+  };
+  return date.toLocaleDateString("en-US", options);
+}
 
 interface WelcomeScreenProps {
   onStart: () => void;
@@ -45,11 +87,26 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           </span>
         </motion.h1>
 
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.8 }}
-          className="mt-8 max-w-md text-base leading-relaxed text-white/70 md:text-lg"
+          className="mt-8 flex flex-col items-center gap-2"
+        >
+          <div className="flex items-center gap-2 rounded-full bg-white/10 px-5 py-2 text-sm text-white backdrop-blur-sm">
+            <Video className="h-4 w-4" />
+            <span>Live Online Event</span>
+          </div>
+          <p className="text-sm text-white/60">
+            {formatEventDate(getNextThursday8pmLisbon())}
+          </p>
+        </motion.div>
+
+        <motion.p
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.0, duration: 0.8 }}
+          className="mt-6 max-w-md text-base leading-relaxed text-white/70 md:text-lg"
         >
           Morning light through forest. Creative work that flows. Neighbors building the future.
         </motion.p>
@@ -57,7 +114,7 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
         <motion.button
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.1, duration: 0.8 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.98 }}
           onClick={onStart}
