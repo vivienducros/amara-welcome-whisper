@@ -132,8 +132,19 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           onClick={onStart}
           className="mt-12 rounded-full bg-primary px-10 py-4 text-sm uppercase tracking-[0.2em] text-primary-foreground transition-colors hover:bg-primary/90"
         >
-          Discover Your Place
+          Reserve My Free Spot
+
         </motion.button>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.9, duration: 0.5 }}
+          className="mt-5 flex flex-col items-center gap-2"
+        >
+          <p className="text-xs text-white/50">⚡ Limited spots available</p>
+          <p className="text-xs text-white/40">Join 200+ families already exploring Amara</p>
+        </motion.div>
       </div>
     </motion.div>
   );
