@@ -123,7 +123,7 @@ const ContactScreen = ({ totalQuestions, onSubmit, onBack }: ContactScreenProps)
   const stepSubtitles = [
     "So we know who we're talking to.",
     "We'll send you the event link and details.",
-    "We'll text you a reminder before the event.",
+    "We'll text you a reminder before the event — no calls, ever.",
   ];
 
   return (
