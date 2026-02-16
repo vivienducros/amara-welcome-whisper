@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
+import { icons } from "lucide-react";
 import type { QuizQuestion } from "@/data/quizData";
 
 interface QuizScreenProps {
@@ -17,7 +18,7 @@ const QuizScreen = ({
   onAnswer,
   onBack,
 }: QuizScreenProps) => {
-  const progress = ((questionIndex + 1) / (totalQuestions + 3)) * 100; // +3 for contact steps
+  const progress = ((questionIndex + 1) / (totalQuestions + 3)) * 100;
 
   return (
     <motion.div
@@ -64,20 +65,26 @@ const QuizScreen = ({
         </motion.h2>
 
         <div className="flex w-full max-w-md flex-col gap-3">
-          {question.options.map((option, i) => (
-            <motion.button
-              key={option}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.25 + i * 0.08, duration: 0.4 }}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => onAnswer(option)}
-              className="w-full rounded-2xl border border-border bg-background px-6 py-4 text-left text-sm leading-relaxed transition-all hover:border-primary hover:bg-primary/5 md:text-base"
-            >
-              {option}
-            </motion.button>
-          ))}
+          {question.options.map((option, i) => {
+            const IconComponent = icons[option.icon as keyof typeof icons];
+            return (
+              <motion.button
+                key={option.label}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.25 + i * 0.08, duration: 0.4 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => onAnswer(option.label)}
+                className="flex w-full items-center gap-4 rounded-2xl border border-border bg-background px-6 py-4 text-left text-sm leading-relaxed transition-all hover:border-primary hover:bg-primary/5 md:text-base"
+              >
+                {IconComponent && (
+                  <IconComponent className="h-5 w-5 shrink-0 text-primary" />
+                )}
+                {option.label}
+              </motion.button>
+            );
+          })}
         </div>
       </div>
     </motion.div>

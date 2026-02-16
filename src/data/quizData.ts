@@ -1,51 +1,56 @@
+export interface QuizOption {
+  label: string;
+  icon: string; // Lucide icon name
+}
+
 export interface QuizQuestion {
   question: string;
-  options: string[];
+  options: QuizOption[];
 }
 
 export const quizQuestions: QuizQuestion[] = [
   {
     question: "What matters most to you right now?",
     options: [
-      "A deeper connection to nature",
-      "A community of like-minded people",
-      "A healthier environment for my family",
-      "A place that fuels my creativity & work",
+      { label: "A deeper connection to nature", icon: "TreePine" },
+      { label: "A community of like-minded people", icon: "Users" },
+      { label: "A healthier environment for my family", icon: "Heart" },
+      { label: "A place that fuels my creativity & work", icon: "Sparkles" },
     ],
   },
   {
     question: "What best describes you?",
     options: [
-      "Entrepreneur / Founder",
-      "Artist / Creative",
-      "Family looking for a new chapter",
-      "Professional seeking more meaning",
+      { label: "Entrepreneur / Founder", icon: "Rocket" },
+      { label: "Artist / Creative", icon: "Palette" },
+      { label: "Family looking for a new chapter", icon: "Home" },
+      { label: "Professional seeking more meaning", icon: "Compass" },
     ],
   },
   {
     question: "What's your vision for Amara?",
     options: [
-      "I want to live there full-time or part of the year",
-      "I want a home for my family to grow into",
-      "I want to create and work from an inspiring place",
-      "I'm mainly looking for a real estate investment",
+      { label: "I want to live there full-time or part of the year", icon: "Sun" },
+      { label: "I want a home for my family to grow into", icon: "Trees" },
+      { label: "I want to create and work from an inspiring place", icon: "Lightbulb" },
+      { label: "I'm mainly looking for a real estate investment", icon: "TrendingUp" },
     ],
   },
   {
     question: "What stage of life are you in?",
     options: [
-      "I'm in my 20s-30s, building my path",
-      "I'm in my 30s-40s, ready for a meaningful shift",
-      "I'm in my 40s-50s, designing my next chapter",
-      "I'm 60+, looking for a peaceful place to enjoy life",
+      { label: "I'm in my 20s-30s, building my path", icon: "Footprints" },
+      { label: "I'm in my 30s-40s, ready for a meaningful shift", icon: "ArrowUpRight" },
+      { label: "I'm in my 40s-50s, designing my next chapter", icon: "PenTool" },
+      { label: "I'm 60+, looking for a peaceful place to enjoy life", icon: "Leaf" },
     ],
   },
   {
     question: "Are you in a position to invest in a home within the next 12 months?",
     options: [
-      "Yes, I have savings or assets ready (50K€+)",
-      "I'm working toward it and could be ready soon",
-      "Not yet, but I'm exploring for the future",
+      { label: "Yes, I have savings or assets ready (50K€+)", icon: "CircleCheck" },
+      { label: "I'm working toward it and could be ready soon", icon: "Clock" },
+      { label: "Not yet, but I'm exploring for the future", icon: "Search" },
     ],
   },
 ];
