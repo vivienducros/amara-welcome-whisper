@@ -130,21 +130,20 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.98 }}
           onClick={onStart}
-          className="mt-12 rounded-full bg-primary px-10 py-4 text-sm uppercase tracking-[0.2em] text-primary-foreground transition-colors hover:bg-primary/90"
+          className="mt-12 flex flex-col items-center rounded-full bg-primary px-10 py-4 text-primary-foreground transition-colors hover:bg-primary/90"
         >
-          Reserve My Free Spot
-
+          <span className="text-sm uppercase tracking-[0.2em]">Reserve My Free Spot</span>
+          <span className="mt-0.5 text-[10px] uppercase tracking-wider text-primary-foreground/70">Limited spots available</span>
         </motion.button>
 
-        <motion.div
+        <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.9, duration: 0.5 }}
-          className="mt-5 flex flex-col items-center gap-2"
+          className="mt-5 text-xs text-white/40"
         >
-          <p className="text-xs text-white/50">Limited spots available</p>
-          <p className="text-xs text-white/40">Join 200+ people already exploring Amara</p>
-        </motion.div>
+          Join 200+ changemakers already exploring Amara
+        </motion.p>
       </div>
     </motion.div>
   );
