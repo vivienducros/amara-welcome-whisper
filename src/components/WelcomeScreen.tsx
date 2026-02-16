@@ -113,8 +113,8 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           className="mt-6 flex items-center gap-3"
         >
           <div className="flex -space-x-2">
-            <img src={vivienImg} alt="Vivien" className="h-10 w-10 rounded-full border-2 border-white/30 object-cover" />
             <img src={michaelImg} alt="Michael" className="h-10 w-10 rounded-full border-2 border-white/30 object-cover" />
+            <img src={vivienImg} alt="Vivien" className="h-10 w-10 rounded-full border-2 border-white/30 object-cover" />
           </div>
           <p className="text-sm text-white/80 text-left">
             Hosted by <span className="font-medium text-white">Vivien & Michael</span>
