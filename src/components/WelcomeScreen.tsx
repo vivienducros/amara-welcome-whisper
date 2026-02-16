@@ -62,7 +62,7 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${lpBg})` }}
       />
-      <div className="absolute inset-0 bg-foreground/50" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70" />
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center">
@@ -79,10 +79,10 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}
-          className="max-w-2xl text-3xl leading-snug font-light tracking-tight text-white md:text-5xl md:leading-tight"
+          className="max-w-2xl text-3xl leading-snug font-light tracking-tight text-white drop-shadow-lg md:text-5xl md:leading-tight"
         >
           Wake Up to Nature, Work With Purpose, Live Among Visionaries
-          <span className="mt-2 block text-primary-foreground/80">
+          <span className="mt-2 block text-white/90">
             — Discover Your New Life in Portugal
           </span>
         </motion.h1>
@@ -93,11 +93,11 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           transition={{ delay: 0.8, duration: 0.8 }}
           className="mt-8 flex flex-col items-center gap-2"
         >
-          <div className="flex items-center gap-2 rounded-full bg-white/10 px-5 py-2 text-sm text-white backdrop-blur-sm">
+          <div className="flex items-center gap-2 rounded-full bg-white/15 px-5 py-2 text-sm font-medium text-white backdrop-blur-md">
             <Video className="h-4 w-4" />
             <span>Live Online Event</span>
           </div>
-          <p className="text-sm text-white/60">
+          <p className="text-sm text-white/80">
             {formatEventDate(getNextThursday8pmLisbon())}
           </p>
         </motion.div>
@@ -106,7 +106,7 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.0, duration: 0.8 }}
-          className="mt-6 max-w-md text-base leading-relaxed text-white/70 md:text-lg"
+          className="mt-6 max-w-md text-base leading-relaxed text-white/80 drop-shadow md:text-lg"
         >
           Morning light through forest. Creative work that flows. Neighbors building the future.
         </motion.p>
