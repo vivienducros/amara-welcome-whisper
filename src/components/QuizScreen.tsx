@@ -39,7 +39,7 @@ const QuizScreen = ({
           <ArrowLeft className="h-4 w-4" />
           <span className="sr-only md:not-sr-only">Back</span>
         </button>
-        <img src={logoBlack} alt="Amara" className="h-5" />
+        <img src={logoBlack} alt="Amara" className="h-3.5" />
         <span className="text-xs tracking-widest text-muted-foreground">
           {questionIndex + 1} / {totalQuestions}
         </span>
