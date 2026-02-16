@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { icons } from "lucide-react";
 import type { QuizQuestion } from "@/data/quizData";
+import logoA from "@/assets/logo-a.png";
 
 interface QuizScreenProps {
   question: QuizQuestion;
@@ -55,6 +56,7 @@ const QuizScreen = ({
 
       {/* Question */}
       <div className="flex flex-1 flex-col items-center justify-center">
+        <img src={logoA} alt="Amara" className="mb-6 h-10 opacity-20" />
         <motion.h2
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
