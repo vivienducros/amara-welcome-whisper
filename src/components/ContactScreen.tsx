@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
-import { countryCodes } from "@/data/quizData";
+import { countryCodes as defaultCountryCodes } from "@/data/quizData";
 
 interface ContactScreenProps {
   totalQuestions: number;
@@ -15,27 +15,78 @@ const ContactScreen = ({ totalQuestions, onSubmit, onBack }: ContactScreenProps)
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [countryCode, setCountryCode] = useState("+351");
+  const [detectedCode, setDetectedCode] = useState<{ code: string; country: string; flag: string } | null>(null);
   const [error, setError] = useState("");
 
-  const totalSteps = totalQuestions + 3; // quiz questions + 3 contact steps
+  const totalSteps = totalQuestions + 3;
   const currentStep = totalQuestions + step + 1;
   const progress = (currentStep / totalSteps) * 100;
 
   useEffect(() => {
     try {
       const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      const tzToCountry: Record<string, string> = {
-        "Europe/Lisbon": "+351", "Europe/Paris": "+33", "Europe/London": "+44",
-        "America/New_York": "+1", "America/Chicago": "+1", "America/Los_Angeles": "+1",
-        "Europe/Berlin": "+49", "Europe/Madrid": "+34", "Europe/Rome": "+39",
-        "Europe/Amsterdam": "+31", "Europe/Brussels": "+32", "Europe/Zurich": "+41",
-        "Europe/Stockholm": "+46", "Europe/Oslo": "+47", "Europe/Copenhagen": "+45",
-        "America/Sao_Paulo": "+55", "Australia/Sydney": "+61", "Asia/Tokyo": "+81",
-        "Asia/Singapore": "+65",
+      const tzToCountry: Record<string, { code: string; country: string; flag: string }> = {
+        "Europe/Lisbon": { code: "+351", country: "PT", flag: "🇵🇹" },
+        "Europe/Paris": { code: "+33", country: "FR", flag: "🇫🇷" },
+        "Europe/London": { code: "+44", country: "GB", flag: "🇬🇧" },
+        "America/New_York": { code: "+1", country: "US", flag: "🇺🇸" },
+        "America/Chicago": { code: "+1", country: "US", flag: "🇺🇸" },
+        "America/Los_Angeles": { code: "+1", country: "US", flag: "🇺🇸" },
+        "America/Denver": { code: "+1", country: "US", flag: "🇺🇸" },
+        "Europe/Berlin": { code: "+49", country: "DE", flag: "🇩🇪" },
+        "Europe/Madrid": { code: "+34", country: "ES", flag: "🇪🇸" },
+        "Europe/Rome": { code: "+39", country: "IT", flag: "🇮🇹" },
+        "Europe/Amsterdam": { code: "+31", country: "NL", flag: "🇳🇱" },
+        "Europe/Brussels": { code: "+32", country: "BE", flag: "🇧🇪" },
+        "Europe/Zurich": { code: "+41", country: "CH", flag: "🇨🇭" },
+        "Europe/Stockholm": { code: "+46", country: "SE", flag: "🇸🇪" },
+        "Europe/Oslo": { code: "+47", country: "NO", flag: "🇳🇴" },
+        "Europe/Copenhagen": { code: "+45", country: "DK", flag: "🇩🇰" },
+        "Europe/Vienna": { code: "+43", country: "AT", flag: "🇦🇹" },
+        "Europe/Warsaw": { code: "+48", country: "PL", flag: "🇵🇱" },
+        "America/Sao_Paulo": { code: "+55", country: "BR", flag: "🇧🇷" },
+        "America/Argentina/Buenos_Aires": { code: "+54", country: "AR", flag: "🇦🇷" },
+        "America/Mexico_City": { code: "+52", country: "MX", flag: "🇲🇽" },
+        "America/Bogota": { code: "+57", country: "CO", flag: "🇨🇴" },
+        "America/Santiago": { code: "+56", country: "CL", flag: "🇨🇱" },
+        "Australia/Sydney": { code: "+61", country: "AU", flag: "🇦🇺" },
+        "Asia/Tokyo": { code: "+81", country: "JP", flag: "🇯🇵" },
+        "Asia/Singapore": { code: "+65", country: "SG", flag: "🇸🇬" },
+        "Asia/Shanghai": { code: "+86", country: "CN", flag: "🇨🇳" },
+        "Asia/Kolkata": { code: "+91", country: "IN", flag: "🇮🇳" },
+        "Asia/Dubai": { code: "+971", country: "AE", flag: "🇦🇪" },
+        "Asia/Jerusalem": { code: "+972", country: "IL", flag: "🇮🇱" },
+        "Africa/Johannesburg": { code: "+27", country: "ZA", flag: "🇿🇦" },
+        "Pacific/Auckland": { code: "+64", country: "NZ", flag: "🇳🇿" },
+        "America/Toronto": { code: "+1", country: "CA", flag: "🇨🇦" },
+        "America/Vancouver": { code: "+1", country: "CA", flag: "🇨🇦" },
+        "Europe/Dublin": { code: "+353", country: "IE", flag: "🇮🇪" },
+        "Europe/Helsinki": { code: "+358", country: "FI", flag: "🇫🇮" },
+        "Europe/Athens": { code: "+30", country: "GR", flag: "🇬🇷" },
+        "Europe/Bucharest": { code: "+40", country: "RO", flag: "🇷🇴" },
+        "Europe/Prague": { code: "+420", country: "CZ", flag: "🇨🇿" },
+        "Europe/Budapest": { code: "+36", country: "HU", flag: "🇭🇺" },
+        "Asia/Seoul": { code: "+82", country: "KR", flag: "🇰🇷" },
+        "Asia/Bangkok": { code: "+66", country: "TH", flag: "🇹🇭" },
       };
-      if (tzToCountry[tz]) setCountryCode(tzToCountry[tz]);
+      const match = tzToCountry[tz];
+      if (match) {
+        setCountryCode(match.code);
+        // If this country isn't in the default list, store it to add
+        const exists = defaultCountryCodes.some(c => c.code === match.code && c.country === match.country);
+        if (!exists) {
+          setDetectedCode(match);
+        }
+      }
     } catch {}
   }, []);
+
+  const countryCodes = useMemo(() => {
+    if (detectedCode && !defaultCountryCodes.some(c => c.code === detectedCode.code && c.country === detectedCode.country)) {
+      return [detectedCode, ...defaultCountryCodes];
+    }
+    return defaultCountryCodes;
+  }, [detectedCode]);
 
   const handleBack = () => {
     setError("");
