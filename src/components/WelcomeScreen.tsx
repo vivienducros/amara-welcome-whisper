@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import logoBlack from "@/assets/logo-black.png";
 
 interface WelcomeScreenProps {
   onStart: () => void;
@@ -13,14 +14,14 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
       transition={{ duration: 0.8 }}
       className="flex min-h-[100dvh] flex-col items-center justify-center px-6 text-center"
     >
-      <motion.p
+      <motion.img
+        src={logoBlack}
+        alt="Amara"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3, duration: 0.8 }}
-        className="mb-6 text-xs uppercase tracking-[0.35em] text-muted-foreground"
-      >
-        Amara · Portugal
-      </motion.p>
+        transition={{ delay: 0.2, duration: 0.8 }}
+        className="mb-10 h-8 md:h-10"
+      />
 
       <motion.h1
         initial={{ opacity: 0, y: 20 }}

@@ -46,7 +46,6 @@ export const quizQuestions: QuizQuestion[] = [
       "Yes, I have savings or assets ready (50K€+)",
       "I'm working toward it and could be ready soon",
       "Not yet, but I'm exploring for the future",
-      "I'd prefer to start with a rental or smaller commitment",
     ],
   },
 ];

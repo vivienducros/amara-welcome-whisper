@@ -17,7 +17,7 @@ const QuizScreen = ({
   onAnswer,
   onBack,
 }: QuizScreenProps) => {
-  const progress = ((questionIndex + 1) / (totalQuestions + 1)) * 100; // +1 for contact screen
+  const progress = ((questionIndex + 1) / (totalQuestions + 3)) * 100; // +3 for contact steps
 
   return (
     <motion.div
@@ -46,7 +46,7 @@ const QuizScreen = ({
       <div className="mt-4 h-[2px] w-full overflow-hidden rounded-full bg-muted">
         <motion.div
           className="h-full bg-primary"
-          initial={{ width: `${((questionIndex) / (totalQuestions + 1)) * 100}%` }}
+          initial={{ width: `${((questionIndex) / (totalQuestions + 3)) * 100}%` }}
           animate={{ width: `${progress}%` }}
           transition={{ duration: 0.5 }}
         />
