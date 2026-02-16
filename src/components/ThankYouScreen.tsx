@@ -110,7 +110,7 @@ const ThankYouScreen = ({ firstName }: ThankYouScreenProps) => {
           transition={{ delay: 0.3, duration: 0.5 }}
           className="mt-4 max-w-sm text-center text-sm leading-relaxed text-muted-foreground md:text-base"
         >
-          Your event is on <span className="font-medium text-foreground">{formatEventDate(eventDate)}</span>.
+          We're pulling back the curtain on Amara this <span className="font-medium text-foreground">{formatEventDate(eventDate)}</span>. You don't want to miss this.
         </motion.p>
 
         <motion.p
