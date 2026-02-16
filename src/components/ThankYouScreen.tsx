@@ -113,6 +113,24 @@ const ThankYouScreen = ({ firstName }: ThankYouScreenProps) => {
           We're pulling back the curtain on Amara this <span className="font-medium text-foreground">{formatEventDate(eventDate)}</span>. You don't want to miss this.
         </motion.p>
 
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35, duration: 0.5 }}
+          className="mt-6 w-full max-w-md overflow-hidden rounded-2xl"
+        >
+          <div style={{ padding: "56.25% 0 0 0", position: "relative" }}>
+            <iframe
+              src="https://player.vimeo.com/video/1153756108?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1"
+              frameBorder="0"
+              allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+              title="Amara"
+            />
+          </div>
+        </motion.div>
+
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
