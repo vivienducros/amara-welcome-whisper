@@ -140,7 +140,7 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.9, duration: 0.5 }}
-          className="mt-5 text-xs text-white/40"
+          className="mt-5 text-sm text-white/70"
         >
           Join 200+ changemakers already exploring Amara
         </motion.p>
