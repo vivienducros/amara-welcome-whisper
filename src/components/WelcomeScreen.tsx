@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import { Video } from "lucide-react";
 import logoWhite from "@/assets/logo-white.png";
 import lpBg from "@/assets/lp-bg.jpg";
+import vivienImg from "@/assets/vivien.png";
+import michaelImg from "@/assets/michael.jpg";
 
 function getNextThursday8pmLisbon(): Date {
   const now = new Date();
@@ -104,14 +106,22 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           <p className="text-sm text-white/80">{formatEventDate(getNextThursday8pmLisbon())}</p>
         </motion.div>
 
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.0, duration: 0.8 }}
-          className="mt-6 max-w-md text-base leading-relaxed text-white/80 drop-shadow md:text-lg"
+          className="mt-6 flex items-center gap-3"
         >
-          Morning light through forest. Creative work that flows. Neighbors building the future.
-        </motion.p>
+          <div className="flex -space-x-2">
+            <img src={vivienImg} alt="Vivien" className="h-10 w-10 rounded-full border-2 border-white/30 object-cover" />
+            <img src={michaelImg} alt="Michael" className="h-10 w-10 rounded-full border-2 border-white/30 object-cover" />
+          </div>
+          <p className="text-sm text-white/80 text-left">
+            Hosted by <span className="font-medium text-white">Vivien & Michael</span>
+            <br />
+            <span className="text-white/60">Co-founders of Amara</span>
+          </p>
+        </motion.div>
 
         <motion.button
           initial={{ opacity: 0, y: 15 }}
