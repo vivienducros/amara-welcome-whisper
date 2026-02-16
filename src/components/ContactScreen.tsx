@@ -122,8 +122,8 @@ const ContactScreen = ({ totalQuestions, onSubmit, onBack }: ContactScreenProps)
   const stepLabels = ["What's your first name?", "What's your email?", "What's your phone number?"];
   const stepSubtitles = [
     "So we know who we're talking to.",
-    "We'll send you what's next for Amara.",
-    "For a personal welcome — no calls unless you ask.",
+    "We'll send you the event link and details.",
+    "We'll text you a reminder before the event.",
   ];
 
   return (
