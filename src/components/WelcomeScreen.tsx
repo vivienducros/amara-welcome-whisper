@@ -58,7 +58,7 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.8 }}
+      transition={{ duration: 0.4 }}
       className="relative flex min-h-[100dvh] flex-col px-6 text-center"
     >
       {/* Background image with overlay */}
@@ -72,7 +72,7 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.2, duration: 0.8 }}
+        transition={{ delay: 0.1, duration: 0.4 }}
         className="relative z-10 flex items-center pt-6"
       >
         <img src={logoWhite} alt="Amara" className="h-5 md:h-6" />
@@ -84,7 +84,7 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
           className="max-w-2xl text-3xl leading-snug font-light tracking-tight text-white drop-shadow-lg md:text-5xl md:leading-tight"
         >
           Wake Up to Nature, Work With Purpose, Live Among Visionaries
@@ -96,7 +96,7 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8, duration: 0.8 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
           className="mt-8 flex flex-wrap items-center justify-center gap-3"
         >
           <div className="flex items-center gap-2 rounded-full bg-white/15 px-5 py-2.5 text-sm font-medium text-white backdrop-blur-md">
@@ -109,7 +109,7 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.0, duration: 0.8 }}
+          transition={{ delay: 0.55, duration: 0.5 }}
           className="mt-6 flex items-center gap-3"
         >
           <div className="flex -space-x-2">
@@ -126,7 +126,7 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
         <motion.button
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
+          transition={{ delay: 0.7, duration: 0.5 }}
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.98 }}
           onClick={onStart}
