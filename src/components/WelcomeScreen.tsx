@@ -127,7 +127,7 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           initial={{ opacity: 0, y: 15 }}
           animate={{
             opacity: 1,
-            y: [0, -4, 0],
+            y: [0, -8, 0],
           }}
           transition={{
             opacity: { delay: 0.7, duration: 0.5 },
