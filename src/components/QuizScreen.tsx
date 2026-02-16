@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { icons } from "lucide-react";
 import type { QuizQuestion } from "@/data/quizData";
-import logoA from "@/assets/logo-a.png";
+import logoBlack from "@/assets/logo-black.png";
 
 interface QuizScreenProps {
   question: QuizQuestion;
@@ -39,7 +39,7 @@ const QuizScreen = ({
           <ArrowLeft className="h-4 w-4" />
           <span className="sr-only md:not-sr-only">Back</span>
         </button>
-        <img src={logoA} alt="Amara" className="h-6" />
+        <img src={logoBlack} alt="Amara" className="h-5" />
         <span className="text-xs tracking-widest text-muted-foreground">
           {questionIndex + 1} / {totalQuestions}
         </span>
