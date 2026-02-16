@@ -78,7 +78,7 @@ const QuizScreen = ({
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => onAnswer(option.label)}
-                className="flex w-full items-center gap-4 rounded-2xl border border-border bg-background px-6 py-4 text-left text-sm leading-relaxed transition-all hover:border-primary hover:bg-primary/5 md:text-base"
+                className="flex w-full items-center gap-4 rounded-2xl border border-border bg-background px-6 py-5 text-left text-base leading-relaxed transition-all hover:border-primary hover:bg-primary/5 md:text-lg"
               >
                 {IconComponent && (
                   <IconComponent className="h-5 w-5 shrink-0 text-primary" />
