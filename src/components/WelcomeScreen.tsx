@@ -57,7 +57,7 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.8 }}
-      className="relative flex min-h-[100dvh] flex-col items-center justify-center px-6 text-center"
+      className="relative flex min-h-[100dvh] flex-col px-6 text-center"
     >
       {/* Background image with overlay */}
       <div
@@ -66,16 +66,18 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
       />
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70" />
 
+      {/* Top bar: logo left */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2, duration: 0.8 }}
+        className="relative z-10 flex items-center pt-6"
+      >
+        <img src={logoWhite} alt="Amara" className="h-5 md:h-6" />
+      </motion.div>
+
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center">
-        <motion.img
-          src={logoWhite}
-          alt="Amara"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.8 }}
-          className="mb-10 h-8 md:h-10"
-        />
+      <div className="relative z-10 flex flex-1 flex-col items-center justify-center">
 
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
@@ -93,15 +95,12 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.8 }}
-          className="mt-8 flex flex-col items-center gap-2"
+          className="mt-8 flex items-center gap-3 rounded-full bg-white/15 px-5 py-2.5 text-sm text-white backdrop-blur-md"
         >
-          <div className="flex items-center gap-2 rounded-full bg-white/15 px-5 py-2 text-sm font-medium text-white backdrop-blur-md">
-            <Video className="h-4 w-4" />
-            <span>Live Online Event</span>
-          </div>
-          <p className="text-sm text-white/80">
-            {formatEventDate(getNextThursday8pmLisbon())}
-          </p>
+          <Video className="h-4 w-4" />
+          <span className="font-medium">Live Online Event</span>
+          <span className="text-white/60">·</span>
+          <span className="text-white/80">{formatEventDate(getNextThursday8pmLisbon())}</span>
         </motion.div>
 
         <motion.p
