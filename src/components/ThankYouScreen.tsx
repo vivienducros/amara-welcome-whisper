@@ -42,7 +42,7 @@ const steps = [
   {
     icon: MessageCircle,
     title: "Join the WhatsApp Community",
-    description: "Connect with other attendees and get live updates",
+    description: "Receive the access link and exclusive surprises",
     cta: "Join WhatsApp",
     href: "https://amaravillage.co/whatsapp",
   },
