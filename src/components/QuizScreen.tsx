@@ -39,6 +39,7 @@ const QuizScreen = ({
           <ArrowLeft className="h-4 w-4" />
           <span className="sr-only md:not-sr-only">Back</span>
         </button>
+        <img src={logoA} alt="Amara" className="h-6" />
         <span className="text-xs tracking-widest text-muted-foreground">
           {questionIndex + 1} / {totalQuestions}
         </span>
@@ -56,7 +57,6 @@ const QuizScreen = ({
 
       {/* Question */}
       <div className="flex flex-1 flex-col items-center justify-center">
-        <img src={logoA} alt="Amara" className="mb-6 h-10 opacity-20" />
         <motion.h2
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
