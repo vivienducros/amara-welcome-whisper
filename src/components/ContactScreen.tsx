@@ -100,18 +100,34 @@ const ContactScreen = ({ totalQuestions, onSubmit, onBack }: ContactScreenProps)
   const handleNext = () => {
     setError("");
     if (step === 0) {
-      if (!firstName.trim()) { setError("Please enter your name"); return; }
+      if (!firstName.trim() || firstName.trim().length < 2) {
+        setError("Please enter your name"); return;
+      }
       setStep(1);
     } else if (step === 1) {
-      if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        setError("Please enter a valid email"); return;
+      const trimmedEmail = email.trim().toLowerCase();
+      // Stricter email: must have valid TLD (2+ chars), no consecutive dots, no leading/trailing dots
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!trimmedEmail || !emailRegex.test(trimmedEmail)) {
+        setError("Please enter a valid email address"); return;
+      }
+      // Block disposable/fake-looking domains
+      const domain = trimmedEmail.split("@")[1];
+      const blockedDomains = ["test.com", "fake.com", "example.com", "asdf.com", "none.com", "noemail.com", "mailinator.com", "tempmail.com", "throwaway.email", "guerrillamail.com", "yopmail.com"];
+      if (blockedDomains.includes(domain)) {
+        setError("Please use a real email address"); return;
       }
       setStep(2);
     } else {
-      if (!phone.trim() || phone.replace(/\D/g, "").length < 6) {
-        setError("Please enter a valid phone number"); return;
+      const digitsOnly = phone.replace(/\D/g, "");
+      if (digitsOnly.length < 7 || digitsOnly.length > 15) {
+        setError("Please enter a valid phone number (7-15 digits)"); return;
       }
-      onSubmit({ firstName: firstName.trim(), email: email.trim(), phone: `${countryCode} ${phone.trim()}` });
+      // Block obviously fake numbers (all same digit, sequential)
+      if (/^(\d)\1+$/.test(digitsOnly)) {
+        setError("Please enter a real phone number"); return;
+      }
+      onSubmit({ firstName: firstName.trim(), email: email.trim().toLowerCase(), phone: `${countryCode} ${phone.trim()}` });
     }
   };
 
