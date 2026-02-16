@@ -95,12 +95,13 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.8 }}
-          className="mt-8 flex items-center gap-3 rounded-full bg-white/15 px-5 py-2.5 text-sm text-white backdrop-blur-md"
+          className="mt-8 flex flex-col items-center gap-2"
         >
-          <Video className="h-4 w-4" />
-          <span className="font-medium">Live Online Event</span>
-          <span className="text-white/60">·</span>
-          <span className="text-white/80">{formatEventDate(getNextThursday8pmLisbon())}</span>
+          <div className="flex items-center gap-2 rounded-full bg-white/15 px-5 py-2.5 text-sm font-medium text-white backdrop-blur-md">
+            <Video className="h-4 w-4" />
+            <span>Live Online Event</span>
+          </div>
+          <p className="text-sm text-white/80">{formatEventDate(getNextThursday8pmLisbon())}</p>
         </motion.div>
 
         <motion.p
