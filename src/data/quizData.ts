@@ -23,7 +23,7 @@ export const quizQuestions: QuizQuestion[] = [
     options: [
       { label: "Entrepreneur / Founder", icon: "Rocket" },
       { label: "Artist / Creative", icon: "Palette" },
-      { label: "Family looking for a new chapter", icon: "Home" },
+      { label: "Family looking for a new chapter", icon: "House" },
       { label: "Professional seeking more meaning", icon: "Compass" },
     ],
   },
