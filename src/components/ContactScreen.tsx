@@ -224,6 +224,10 @@ const ContactScreen = ({ totalQuestions, onSubmit, onBack }: ContactScreenProps)
             >
               {step < 2 ? "Continue" : "Reserve My Spot"}
             </motion.button>
+
+            <p className="mt-4 text-center text-xs text-muted-foreground">
+              🔒 Your info stays private. No spam, ever.
+            </p>
           </motion.div>
         </AnimatePresence>
       </div>
