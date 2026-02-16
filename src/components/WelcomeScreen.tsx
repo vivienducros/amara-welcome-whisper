@@ -95,7 +95,7 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, duration: 0.8 }}
-          className="mt-8 flex flex-col items-center gap-2"
+          className="mt-8 flex flex-wrap items-center justify-center gap-3"
         >
           <div className="flex items-center gap-2 rounded-full bg-white/15 px-5 py-2.5 text-sm font-medium text-white backdrop-blur-md">
             <Video className="h-4 w-4" />
