@@ -33,15 +33,17 @@ function getNextThursday8pmLisbon(): Date {
 }
 
 function formatEventDate(date: Date): string {
-  const options: Intl.DateTimeFormatOptions = {
+  const dateStr = date.toLocaleDateString("en-US", {
     weekday: "long",
     month: "long",
     day: "numeric",
+  });
+  const timeStr = date.toLocaleTimeString("en-US", {
     hour: "numeric",
     minute: "2-digit",
-    timeZoneName: "short",
-  };
-  return date.toLocaleDateString("en-US", options);
+  });
+  const city = Intl.DateTimeFormat().resolvedOptions().timeZone.split("/").pop()?.replace(/_/g, " ") || "local time";
+  return `${dateStr} at ${timeStr} (${city})`;
 }
 
 interface WelcomeScreenProps {
