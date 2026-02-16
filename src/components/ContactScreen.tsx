@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ShieldCheck } from "lucide-react";
 import { countryCodes as defaultCountryCodes } from "@/data/quizData";
 
 interface ContactScreenProps {
@@ -225,8 +225,8 @@ const ContactScreen = ({ totalQuestions, onSubmit, onBack }: ContactScreenProps)
               {step < 2 ? "Continue" : "Reserve My Spot"}
             </motion.button>
 
-            <p className="mt-4 text-center text-xs text-muted-foreground">
-              🔒 Your info stays private. No spam, ever.
+            <p className="mt-4 flex items-center justify-center gap-1.5 text-center text-xs text-muted-foreground">
+              <ShieldCheck className="h-3.5 w-3.5" /> Your info stays private. No spam, ever.
             </p>
           </motion.div>
         </AnimatePresence>
