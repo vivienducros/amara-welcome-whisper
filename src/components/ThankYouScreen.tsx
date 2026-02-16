@@ -110,7 +110,16 @@ const ThankYouScreen = ({ firstName }: ThankYouScreenProps) => {
           transition={{ delay: 0.3, duration: 0.5 }}
           className="mt-4 max-w-sm text-center text-sm leading-relaxed text-muted-foreground md:text-base"
         >
-          Your event is on <span className="font-medium text-foreground">{formatEventDate(eventDate)}</span>. Complete the steps below to confirm your access.
+          Your event is on <span className="font-medium text-foreground">{formatEventDate(eventDate)}</span>.
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+          className="mt-6 rounded-xl bg-primary/10 px-6 py-3 text-center text-sm font-medium text-foreground"
+        >
+          Complete these 3 steps to confirm your access
         </motion.p>
 
         {/* Steps */}
