@@ -89,7 +89,7 @@ const ThankYouScreen = ({ firstName }: ThankYouScreenProps) => {
       className="flex min-h-[100dvh] flex-col px-6 py-8"
     >
       {/* Header */}
-      <div className="flex justify-center">
+      <div className="flex justify-center mb-8">
         <img src={logoBlack} alt="Amara" className="h-3.5" />
       </div>
 
@@ -101,7 +101,7 @@ const ThankYouScreen = ({ firstName }: ThankYouScreenProps) => {
           transition={{ delay: 0.15, duration: 0.5 }}
           className="max-w-md text-center text-2xl font-light leading-snug md:text-3xl"
         >
-          {firstName}, you're in!
+          {firstName}, you're in! 3 quick taps to confirm your spot.
         </motion.h2>
 
         <motion.p
@@ -130,15 +130,6 @@ const ThankYouScreen = ({ firstName }: ThankYouScreenProps) => {
             />
           </div>
         </motion.div>
-
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-          className="mt-6 rounded-xl bg-primary/10 px-6 py-3 text-center text-sm font-medium text-foreground"
-        >
-          Complete these 3 steps to confirm your access
-        </motion.p>
 
         {/* Steps */}
         <motion.div
