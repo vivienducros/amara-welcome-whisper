@@ -120,10 +120,31 @@ const ContactScreen = ({ totalQuestions, onSubmit, onBack }: ContactScreenProps)
       setStep(2);
     } else {
       const digitsOnly = phone.replace(/\D/g, "");
-      if (digitsOnly.length < 7 || digitsOnly.length > 15) {
-        setError("Please enter a valid phone number (7-15 digits)"); return;
+      
+      // Country-specific phone length validation
+      const phoneLengths: Record<string, number[]> = {
+        "+351": [9], "+33": [9], "+44": [10], "+1": [10],
+        "+49": [10, 11], "+34": [9], "+39": [9, 10], "+31": [9],
+        "+32": [8, 9], "+41": [9], "+46": [9], "+47": [8],
+        "+45": [8], "+43": [10], "+48": [9], "+55": [10, 11],
+        "+61": [9], "+81": [10], "+86": [11], "+91": [10],
+        "+971": [9], "+972": [9], "+27": [9], "+52": [10],
+        "+65": [8], "+64": [8, 9, 10], "+353": [9], "+358": [9, 10],
+        "+30": [10], "+40": [9], "+420": [9], "+36": [9],
+        "+82": [10, 11], "+66": [9], "+54": [10], "+57": [10],
+        "+56": [9],
+      };
+      
+      const expectedLengths = phoneLengths[countryCode];
+      if (expectedLengths) {
+        if (!expectedLengths.includes(digitsOnly.length)) {
+          setError(`Phone number should be ${expectedLengths.join(" or ")} digits for this country`);
+          return;
+        }
+      } else if (digitsOnly.length < 7 || digitsOnly.length > 15) {
+        setError("Please enter a valid phone number"); return;
       }
-      // Block obviously fake numbers (all same digit, sequential)
+      
       if (/^(\d)\1+$/.test(digitsOnly)) {
         setError("Please enter a real phone number"); return;
       }
