@@ -143,7 +143,7 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           className="mt-5 flex flex-col items-center gap-2"
         >
           <p className="text-xs text-white/50">Limited spots available</p>
-          <p className="text-xs text-white/40">Join 200+ families already exploring Amara</p>
+          <p className="text-xs text-white/40">Join 200+ people already exploring Amara</p>
         </motion.div>
       </div>
     </motion.div>
